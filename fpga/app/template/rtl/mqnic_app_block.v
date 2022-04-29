@@ -548,14 +548,48 @@ assign m_axis_sync_rx_tuser = s_axis_sync_rx_tuser;
 /*
  * Ethernet (internal at interface module)
  */
-assign m_axis_if_tx_tdata = s_axis_if_tx_tdata;
-assign m_axis_if_tx_tkeep = s_axis_if_tx_tkeep;
-assign m_axis_if_tx_tvalid = s_axis_if_tx_tvalid;
-assign s_axis_if_tx_tready = m_axis_if_tx_tready;
-assign m_axis_if_tx_tlast = s_axis_if_tx_tlast;
-assign m_axis_if_tx_tid = s_axis_if_tx_tid;
-assign m_axis_if_tx_tdest = s_axis_if_tx_tdest;
-assign m_axis_if_tx_tuser = s_axis_if_tx_tuser;
+
+ //TODO: replace with RMT pipeline, NOTE that there are 2 ports
+
+// assign m_axis_if_tx_tdata = s_axis_if_tx_tdata;
+// assign m_axis_if_tx_tkeep = s_axis_if_tx_tkeep;
+// assign m_axis_if_tx_tvalid = s_axis_if_tx_tvalid;
+// assign s_axis_if_tx_tready = m_axis_if_tx_tready;
+// assign m_axis_if_tx_tlast = s_axis_if_tx_tlast;
+// assign m_axis_if_tx_tid = s_axis_if_tx_tid;
+// assign m_axis_if_tx_tdest = s_axis_if_tx_tdest;
+// assign m_axis_if_tx_tuser = s_axis_if_tx_tuser;
+
+rmt_wrapper #(
+	.C_S_AXIS_DATA_WIDTH(512),
+	.C_S_AXIS_TUSER_WIDTH(128)
+)rmt_wrapper_tx(
+	.clk(clk),
+	.aresetn(aresetn),	
+	
+	.s_axis_tdata(s_axis_if_tx_tdata[511:0]),
+	.s_axis_tkeep(s_axis_if_tx_tkeep[63:0]),
+	.s_axis_tuser(s_axis_if_tx_tuser[127:0]),
+	.s_axis_tvalid(s_axis_if_tx_tvalid[0]),
+	.s_axis_tready(s_axis_if_tx_tready[0]),
+	.s_axis_tlast(s_axis_if_tx_tlast[0]),
+	
+	.m_axis_tdata(m_axis_if_tx_tdata[511:0]),
+	.m_axis_tkeep(m_axis_if_tx_tkeep[63:0]),
+	.m_axis_tuser(m_axis_if_tx_tuser[127:0]),
+	.m_axis_tvalid(m_axis_if_tx_tvalid[0]),
+	.m_axis_tready(m_axis_if_tx_tready[0]),
+	.m_axis_tlast(m_axis_if_tx_tlast[0])
+);
+
+assign m_axis_if_tx_tdata[1023 -: AXIS_DATA_WIDTH] = s_axis_if_tx_tdata[1023 -: AXIS_DATA_WIDTH];
+assign m_axis_if_tx_tkeep[127 -: AXIS_DATA_WIDTH/8] = s_axis_if_tx_tkeep[127 -: AXIS_DATA_WIDTH/8];
+assign m_axis_if_tx_tvalid[1] = s_axis_if_tx_tvalid[1];
+assign s_axis_if_tx_tready[1] = m_axis_if_tx_tready[1];
+assign m_axis_if_tx_tlast[1] = s_axis_if_tx_tlast[1];
+assign m_axis_if_tx_tid      = s_axis_if_tx_tid;
+assign m_axis_if_tx_tdest    = s_axis_if_tx_tdest;
+assign m_axis_if_tx_tuser    = s_axis_if_tx_tuser;
 
 assign m_axis_if_tx_ptp_ts = s_axis_if_tx_ptp_ts;
 assign m_axis_if_tx_ptp_ts_tag = s_axis_if_tx_ptp_ts_tag;
@@ -570,6 +604,29 @@ assign m_axis_if_rx_tlast = s_axis_if_rx_tlast;
 assign m_axis_if_rx_tid = s_axis_if_rx_tid;
 assign m_axis_if_rx_tdest = s_axis_if_rx_tdest;
 assign m_axis_if_rx_tuser = s_axis_if_rx_tuser;
+
+// rmt_wrapper #(
+// 	.C_S_AXIS_DATA_WIDTH(512),
+// 	.C_S_AXIS_TUSER_WIDTH(128)
+// )rmt_wrapper_rx(
+// 	.clk(clk),
+// 	.aresetn(aresetn),	
+	
+// 	.s_axis_tdata(s_axis_if_rx_tdata[511:0]),
+// 	.s_axis_tkeep(s_axis_if_rx_tkeep[63:0]),
+// 	.s_axis_tuser(s_axis_if_rx_tuser[127:0]),
+// 	.s_axis_tvalid(s_axis_if_rx_tvalid[0]),
+// 	.s_axis_tready(s_axis_if_rx_tready[0]),
+// 	.s_axis_tlast(s_axis_if_rx_tlast[0]),
+	
+// 	.m_axis_tdata(m_axis_if_rx_tdata[511:0]),
+// 	.m_axis_tkeep(m_axis_if_rx_tkeep[63:0]),
+// 	.m_axis_tuser(m_axis_if_rx_tuser[127:0]),
+// 	.m_axis_tvalid(m_axis_if_rx_tvalid[0]),
+// 	.m_axis_tready(m_axis_if_rx_tready[0]),
+// 	.m_axis_tlast(m_axis_if_rx_tlast[0])
+// );
+
 
 /*
  * DMA interface (control)

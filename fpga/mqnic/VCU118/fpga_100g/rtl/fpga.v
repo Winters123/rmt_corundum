@@ -107,13 +107,13 @@ module fpga #
     parameter RX_RAM_SIZE = 131072,
 
     // Application block configuration
-    parameter APP_ENABLE = 0,
-    parameter APP_CTRL_ENABLE = 1,
-    parameter APP_DMA_ENABLE = 1,
-    parameter APP_AXIS_DIRECT_ENABLE = 1,
-    parameter APP_AXIS_SYNC_ENABLE = 1,
+    parameter APP_ENABLE = 1, //TODO: mark app_enable here
+    parameter APP_CTRL_ENABLE = 0,
+    parameter APP_DMA_ENABLE = 0,
+    parameter APP_AXIS_DIRECT_ENABLE = 0,
+    parameter APP_AXIS_SYNC_ENABLE = 0,
     parameter APP_AXIS_IF_ENABLE = 1,
-    parameter APP_STAT_ENABLE = 1,
+    parameter APP_STAT_ENABLE = 0,
 
     // DMA interface configuration
     parameter DMA_LEN_WIDTH = 16,
