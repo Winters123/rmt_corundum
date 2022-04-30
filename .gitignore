@@ -21,4 +21,7 @@ modules.order
 *.log
 *.str
 
+project_synth/
+*.bit
+
 tags

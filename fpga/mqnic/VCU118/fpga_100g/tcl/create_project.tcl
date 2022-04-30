@@ -52,6 +52,7 @@ lappend SYN_FILES lib/eth/rtl/ptp_clock.v
 lappend SYN_FILES lib/eth/rtl/ptp_clock_cdc.v
 lappend SYN_FILES lib/eth/rtl/ptp_perout.v
 lappend SYN_FILES lib/axi/rtl/axil_interconnect.v
+lappend SYN_FILES lib/axi/rtl/axil_ram.v
 lappend SYN_FILES lib/axi/rtl/axil_crossbar.v
 lappend SYN_FILES lib/axi/rtl/axil_crossbar_addr.v
 lappend SYN_FILES lib/axi/rtl/axil_crossbar_rd.v
@@ -98,6 +99,9 @@ lappend SYN_FILES lib/pcie/rtl/pcie_us_cfg.v
 lappend SYN_FILES lib/pcie/rtl/pcie_us_msi.v
 lappend SYN_FILES lib/pcie/rtl/pulse_merge.v
 
+#add mqnic_app_block
+lappend SYN_FILES app/template/rtl/mqnic_app_block.v
+
 
 # RMT-related 
 lappend SYN_FILES lib_rmt/rmtv2/rmt_wrapper.v
@@ -119,7 +123,7 @@ lappend SYN_FILES lib_rmt/rmtv2/lookup/lookup_engine.v
 set XDC_FILES [list fpga.xdc]
 lappend XDC_FILES placement.xdc
 lappend XDC_FILES boot.xdc
-lappend XDC_FILES lib/axis/syn/vivado/axis_async_fifo.tcll
+lappend XDC_FILES lib/axis/syn/vivado/axis_async_fifo.tcl
 lappend XDC_FILES lib/axis/syn/vivado/sync_reset.tcl
 lappend XDC_FILES lib/eth/syn/vivado/ptp_clock_cdc.tcl
 

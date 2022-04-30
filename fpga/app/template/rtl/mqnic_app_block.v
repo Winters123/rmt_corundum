@@ -565,18 +565,18 @@ rmt_wrapper #(
 	.C_S_AXIS_TUSER_WIDTH(128)
 )rmt_wrapper_tx(
 	.clk(clk),
-	.aresetn(aresetn),	
+	.aresetn(~rst),
 	
 	.s_axis_tdata(s_axis_if_tx_tdata[511:0]),
 	.s_axis_tkeep(s_axis_if_tx_tkeep[63:0]),
-	.s_axis_tuser(s_axis_if_tx_tuser[127:0]),
+	.s_axis_tuser(s_axis_if_tx_tuser[0]),
 	.s_axis_tvalid(s_axis_if_tx_tvalid[0]),
 	.s_axis_tready(s_axis_if_tx_tready[0]),
 	.s_axis_tlast(s_axis_if_tx_tlast[0]),
 	
 	.m_axis_tdata(m_axis_if_tx_tdata[511:0]),
 	.m_axis_tkeep(m_axis_if_tx_tkeep[63:0]),
-	.m_axis_tuser(m_axis_if_tx_tuser[127:0]),
+	.m_axis_tuser(m_axis_if_tx_tuser[0]),
 	.m_axis_tvalid(m_axis_if_tx_tvalid[0]),
 	.m_axis_tready(m_axis_if_tx_tready[0]),
 	.m_axis_tlast(m_axis_if_tx_tlast[0])
@@ -589,7 +589,7 @@ assign s_axis_if_tx_tready[1] = m_axis_if_tx_tready[1];
 assign m_axis_if_tx_tlast[1] = s_axis_if_tx_tlast[1];
 assign m_axis_if_tx_tid      = s_axis_if_tx_tid;
 assign m_axis_if_tx_tdest    = s_axis_if_tx_tdest;
-assign m_axis_if_tx_tuser    = s_axis_if_tx_tuser;
+assign m_axis_if_tx_tuser[1]    = s_axis_if_tx_tuser[1];
 
 assign m_axis_if_tx_ptp_ts = s_axis_if_tx_ptp_ts;
 assign m_axis_if_tx_ptp_ts_tag = s_axis_if_tx_ptp_ts_tag;
